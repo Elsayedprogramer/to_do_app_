@@ -1,0 +1,129 @@
+  showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                color: Color.fromRGBO(58, 66, 86, 0.7),
+                width: double.infinity,
+                height: double.infinity,
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          // color: Colors.blueAccent,
+                        ),
+                        child: TextField(
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                          controller: myController,
+                          keyboardType: TextInputType.name,
+                          maxLength: 20,
+                          cursorRadius: Radius.circular(50),
+                          decoration: InputDecoration(
+                            fillColor: Colors.blueAccent,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            border: InputBorder.none,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            prefixIcon: Icon(
+                              Icons.person,
+                              size: 33,
+                              color: Colors.white,
+                            ),
+                            hintText: "Add New Task",
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              myText = myController.text;
+                              myfunc(myText, false);
+                            },
+                            child: Text(
+                              "ADD",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Exit"),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+            isScrollControlled: true,
+          );
+
+          =====================
+
+  calculatedCompletedTask() {
+    int completedTask = 0;
+    allTasks.forEach((item) {
+      if (item.status) {
+        completedTask++;
+      }
+    });
+    return completedTask;
+  }
+
+
+          =========
+
+          Padding(
+      padding: EdgeInsets.only(top: 23),
+      child: Text(
+        "${calculatedCompletedTask()} / ${allTasks.length}",
+        style: TextStyle(
+          fontSize: 44,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+      =======================================================
+      Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CounterText(
+                allToDos: allTasks.length,
+                allCompleted: calculatedCompletedTask(),
+              ),
+              // ToDoCard(),
+              ...allTasks.map((item) => ToDoCard(
+                    varTitle: item.title,
+                    stat: item.status,
+                  )),
+            ],
+          ),
